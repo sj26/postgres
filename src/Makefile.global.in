@@ -393,7 +393,7 @@ ifeq ($(MAKELEVEL),0)
 	# darwin doesn't propagate DYLD_* vars due to system integrity
 	# protection, so we need to rewrite the load commands inside the
 	# binaries when relocating them
-	$(if $(filter $(PORTNAME),darwin),find '$(abs_top_builddir)/tmp_install$(bindir)' -type f -exec install_name_tool -change '$(libdir)/libpq.5.dylib' '$(abs_top_builddir)/tmp_install$(libdir)/libpq.5.dylib' {} \;)
+	$(if $(filter $(PORTNAME),darwin),find '$(abs_top_builddir)/tmp_install$(bindir)' -type f -exec install_name_tool -change '$(libdir)/libpq.5.dylib' '@executable_path/../lib/libpq.5.dylib' {} \;)
 endif
 	$(if $(EXTRA_INSTALL),for extra in $(EXTRA_INSTALL); do $(MAKE) -C '$(top_builddir)'/$$extra DESTDIR='$(abs_top_builddir)'/tmp_install install >>'$(abs_top_builddir)'/tmp_install/log/install.log || exit; done)
 endif
